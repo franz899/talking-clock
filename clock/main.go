@@ -14,30 +14,30 @@ func Talk(value string) (string, error) {
 
 	if minutes == 0 {
 		if hours == 0 {
-			return capitalise(ConvertHoursToWord(hours)), nil
+			return capitalise(convertHoursToWord(hours)), nil
 		}
 		if hours == 12 {
 			return capitalise("noon"), nil
 		}
 
-		return capitalise(fmt.Sprintf("%s o'clock", ConvertHoursToWord(hours))), nil
+		return capitalise(fmt.Sprintf("%s o'clock", convertHoursToWord(hours))), nil
 	}
 
 	if minutes == 30 {
-		return capitalise(fmt.Sprintf("half past %s", ConvertHoursToWord(hours))), nil
+		return capitalise(fmt.Sprintf("half past %s", convertHoursToWord(hours))), nil
 	}
 
 	if minutes > 0 && minutes < 30 {
 		return capitalise(fmt.Sprintf("%s past %s",
-			ConvertMinutesToWord(minutes),
-			ConvertHoursToWord(hours))), nil
+			convertMinutesToWord(minutes),
+			convertHoursToWord(hours))), nil
 	}
 
 	if minutes > 30 && minutes < 60 {
-		nextHour := GetNextHour(hours)
+		nextHour := getNextHour(hours)
 		return capitalise(fmt.Sprintf("%s to %s",
-			ConvertMinutesToWord(minutes),
-			ConvertHoursToWord(nextHour))), nil
+			convertMinutesToWord(minutes),
+			convertHoursToWord(nextHour))), nil
 	}
 
 	return "", fmt.Errorf("can't parse the date")

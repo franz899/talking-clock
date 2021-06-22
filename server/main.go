@@ -1,11 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"github.com/franz899/talking-clock/m/v2/clock"
 )
+
+type TimeResponse struct {
+	Time string `json:"time"`
+}
 
 func main() {
 	http.HandleFunc("/", index)
@@ -23,11 +28,21 @@ func index(w http.ResponseWriter, req *http.Request) {
 		timeToParse = clock.GetCurrentTime()
 	}
 
-	time, err := clock.Talk(timeToParse)
+	phrase, err := clock.Talk(timeToParse)
 	if err != nil {
 		fmt.Fprint(w, err.Error())
 		return
 	}
 
-	fmt.Fprint(w, time)
+	response := TimeResponse{
+		Time: phrase,
+	}
+
+	formatted, err := json.Marshal(response)
+	if err != nil {
+		fmt.Fprint(w, err.Error())
+		return
+	}
+
+	fmt.Fprint(w, string(formatted))
 }
