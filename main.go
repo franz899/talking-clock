@@ -9,18 +9,26 @@ import (
 )
 
 func main() {
-	currentTime := time.Now()
-	currentHour := currentTime.Hour()
-	currentMinute := currentTime.Minute()
+	var timeToParse string
 
-	fmt.Printf("%d:%d\n", currentHour, currentMinute)
+	if len(os.Args) == 2 {
+		timeToParse = os.Args[1]
+	} else {
+		timeToParse = getCurrentTime()
+	}
 
-	time := fmt.Sprintf("%d:%d", currentHour, currentMinute)
-	phrase, err := clock.Talk(time)
+	phrase, err := clock.Talk(timeToParse)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	fmt.Printf("%s\n", phrase)
+}
+
+func getCurrentTime() string {
+	currentTime := time.Now()
+	currentHour := currentTime.Hour()
+	currentMinute := currentTime.Minute()
+	return fmt.Sprintf("%d:%d", currentHour, currentMinute)
 }
