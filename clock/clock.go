@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Talk translates a time specified in
@@ -62,4 +63,11 @@ func splitTime(value string) (int, int) {
 
 func capitalise(s string) string {
 	return strings.Title(string(s[0])) + string(s[1:])
+}
+
+func GetCurrentTime() string {
+	currentTime := time.Now()
+	currentHour := currentTime.Hour()
+	currentMinute := currentTime.Minute()
+	return fmt.Sprintf("%d:%d", currentHour, currentMinute)
 }

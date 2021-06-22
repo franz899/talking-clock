@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/franz899/talking-clock/m/v2/clock"
 )
@@ -14,7 +13,7 @@ func main() {
 	if len(os.Args) == 2 {
 		timeToParse = os.Args[1]
 	} else {
-		timeToParse = getCurrentTime()
+		timeToParse = clock.GetCurrentTime()
 	}
 
 	phrase, err := clock.Talk(timeToParse)
@@ -24,11 +23,4 @@ func main() {
 	}
 
 	fmt.Printf("%s\n", phrase)
-}
-
-func getCurrentTime() string {
-	currentTime := time.Now()
-	currentHour := currentTime.Hour()
-	currentMinute := currentTime.Minute()
-	return fmt.Sprintf("%d:%d", currentHour, currentMinute)
 }
